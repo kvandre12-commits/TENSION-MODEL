@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS tension_features_daily (
+    date TEXT NOT NULL,
+    symbol TEXT NOT NULL,
+
+    close REAL,
+    volume REAL,
+
+    ret_1d REAL,
+    ret_20d REAL,
+    sma20 REAL,
+    dist_sma20 REAL,
+    avg_vol20 REAL,
+    rel_volume REAL,
+
+    structural_score REAL,
+    participation_score REAL,
+    tension_score REAL,
+
+    setup_flag INTEGER DEFAULT 0,
+
+    fwd_5d_return REAL,
+    fwd_5d_abs_return REAL,
+    target_5d_abs_15 INTEGER DEFAULT 0,
+
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (date, symbol)
+);
+
+CREATE INDEX IF NOT EXISTS idx_tension_symbol_date
+ON tension_features_daily(symbol, date);
+
+CREATE INDEX IF NOT EXISTS idx_tension_setup_flag
+ON tension_features_daily(setup_flag);
+
+CREATE INDEX IF NOT EXISTS idx_tension_target
+ON tension_features_daily(target_5d_abs_15);
